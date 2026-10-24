@@ -828,3 +828,63 @@ input:checked + .slider:before {
     width: auto;
   }
 }
+
+/* Official NFSA Quick Services Ribbon Bar */
+.gov-ribbon {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.35rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: auto;
+  gap: 1rem;
+}
+
+.gov-ribbon-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: nowrap;
+}
+
+.gov-ribbon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.gov-ribbon-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border-color: var(--border-subtle);
+}
+
+.gov-ribbon-btn.active {
+  color: var(--text-primary);
+  font-weight: 700;
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.gov-ribbon-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--civic-emerald-text);
+  display: inline-block;
+  margin-left: 2px;
+}
+

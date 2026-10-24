@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { MessageSquare, X, ArrowRight, ShieldCheck, HelpCircle } from 'lucide-react';
 import seedData from '../data/dataset.json';
 
+import type { PortalNavigationTab } from '../types';
+
 interface AskNicciModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigateTab: (tab: 'roster_sim' | 'portability' | 'lifecycle' | 'grievance' | 'inspector') => void;
+  onNavigateTab: (tab: PortalNavigationTab) => void;
 }
 
 export const AskNicciModal: React.FC<AskNicciModalProps> = ({ isOpen, onClose, onNavigateTab }) => {
@@ -103,7 +105,7 @@ export const AskNicciModal: React.FC<AskNicciModalProps> = ({ isOpen, onClose, o
               style={{ fontSize: '0.75rem', padding: '0.35rem 0.65rem' }}
               onClick={() => {
                 onClose();
-                onNavigateTab('roster_sim');
+                onNavigateTab('ration_cards');
               }}
             >
               <span>Test Pre-Flight Simulator</span>
@@ -115,7 +117,7 @@ export const AskNicciModal: React.FC<AskNicciModalProps> = ({ isOpen, onClose, o
               style={{ fontSize: '0.75rem', padding: '0.35rem 0.65rem' }}
               onClick={() => {
                 onClose();
-                onNavigateTab('portability');
+                onNavigateTab('onorc');
               }}
             >
               <span>Test ONORC Portability</span>

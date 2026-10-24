@@ -21,6 +21,8 @@ import {
   Search,
 } from 'lucide-react';
 
+import type { PortalNavigationTab } from '../types';
+
 interface OfficialGovHeaderProps {
   viewMode: 'structured' | 'pictorial';
   onToggleViewMode: () => void;
@@ -31,8 +33,8 @@ interface OfficialGovHeaderProps {
   onVoiceReadback: () => void;
   theme: 'dark' | 'light';
   onToggleTheme: () => void;
-  onNavigateTab: (tab: 'roster_sim' | 'portability' | 'lifecycle' | 'grievance' | 'inspector' | 'state_portals') => void;
-  activeTab: string;
+  onNavigateTab: (tab: PortalNavigationTab) => void;
+  activeTab: PortalNavigationTab;
   onSearchCard: (query: string) => void;
 }
 
@@ -274,110 +276,47 @@ export const OfficialGovHeader: React.FC<OfficialGovHeaderProps> = ({
       </header>
 
       {/* 3. Official NFSA Quick Services Ribbon (As seen on real nfsa.gov.in) */}
-      <div
-        style={{
-          background: 'var(--bg-primary)',
-          borderBottom: '1px solid var(--border-subtle)',
-          padding: '0.45rem 1.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          overflowX: 'auto',
-          gap: '1rem',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'nowrap' }}>
-          {/* Quick Item 1: Foodgrains Bulletin */}
-          <button
-            type="button"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.775rem', color: 'var(--text-secondary)' }}
-            onClick={() => onNavigateTab('roster_sim')}
-            title="Foodgrains Bulletin & Entitlement Ledger"
-          >
-            <FileText size={14} />
-            <span>Foodgrains Bulletin</span>
-          </button>
-
-          {/* Quick Item 2: Fair Price Shop */}
-          <button
-            type="button"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.775rem', color: 'var(--text-secondary)' }}
-            onClick={() => onNavigateTab('portability')}
-            title="Fair Price Shop & Stock Locator"
-          >
-            <Store size={14} />
-            <span>Fair Price Shop</span>
-          </button>
-
-          {/* Quick Item 3: Ration Cards */}
-          <button
-            type="button"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.775rem', color: 'var(--text-secondary)' }}
-            onClick={() => onNavigateTab('roster_sim')}
-            title="Ration Card Details & Safe-Correction"
-          >
-            <CreditCard size={14} />
-            <span>Ration Cards</span>
-          </button>
-
-          {/* Quick Item 4: Allocation */}
-          <button
-            type="button"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.775rem', color: 'var(--text-secondary)' }}
-            onClick={() => onNavigateTab('portability')}
-            title="Allocation Policy & Portability"
-          >
-            <Truck size={14} />
-            <span>Allocation</span>
-          </button>
-
-          {/* Quick Item 5: Citizen Corner */}
-          <button
-            type="button"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.775rem', color: 'var(--text-secondary)' }}
-            onClick={() => onNavigateTab('grievance')}
-            title="Citizen Corner & Grievance Redressal"
-          >
-            <Users size={14} />
-            <span>Citizen Corner</span>
-          </button>
-
-          {/* Quick Item 6: Annavitran */}
-          <button
-            type="button"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.775rem', color: 'var(--text-secondary)' }}
-            onClick={() => onNavigateTab('inspector')}
-            title="Annavitran POS Distribution Dashboard"
-          >
-            <Activity size={14} />
-            <span>Annavitran</span>
-          </button>
-
-          {/* Quick Item 7: IMPDS (ONORC) */}
-          <button
-            type="button"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.775rem', color: 'var(--text-secondary)' }}
-            onClick={() => onNavigateTab('portability')}
-            title="Integrated Management PDS / One Nation One Ration Card"
-          >
-            <Repeat size={14} />
-            <span>IMPDS (ONORC)</span>
-          </button>
-
-          {/* Quick Item 8: Transparency State Portals */}
-          <button
-            type="button"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.775rem', color: 'var(--text-secondary)' }}
-            onClick={() => onNavigateTab('state_portals')}
-            title="State Food Portals & Transparency Directory"
-          >
-            <DollarSign size={14} />
-            <span>State Portals</span>
-          </button>
+      <div className="gov-ribbon" role="navigation" aria-label="Official NFSA Services Ribbon">
+        <div className="gov-ribbon-group">
+          {[
+            { key: 'bulletin' as const, label: 'Foodgrains Bulletin', icon: <FileText size={14} />, tooltip: 'Monthly Central Pool Foodgrains Bulletin & Offtake', testId: 'ribbon-bulletin' },
+            { key: 'fps_locator' as const, label: 'Fair Price Shop', icon: <Store size={14} />, tooltip: 'Fair Price Shop (FPS) Locator & Live Stock Radar', testId: 'ribbon-fps' },
+            { key: 'ration_cards' as const, label: 'Ration Cards', icon: <CreditCard size={14} />, tooltip: 'Ration Card Details & Safe-Correction Simulator', testId: 'ribbon-ration-cards' },
+            { key: 'allocation' as const, label: 'Allocation', icon: <Truck size={14} />, tooltip: 'National Allocation Policy & Quota Calculator', testId: 'ribbon-allocation' },
+            { key: 'citizen_corner' as const, label: 'Citizen Corner', icon: <Users size={14} />, tooltip: 'Citizen Grievance Redressal & Rights', testId: 'ribbon-citizen-corner' },
+            { key: 'annavitran' as const, label: 'Annavitran', icon: <Activity size={14} />, tooltip: 'Nationwide ePoS Distribution Telemetry', testId: 'ribbon-annavitran' },
+            { key: 'onorc' as const, label: 'IMPDS (ONORC)', icon: <Repeat size={14} />, tooltip: 'One Nation One Ration Card Inter-State Portability', testId: 'ribbon-onorc' },
+            { key: 'state_portals' as const, label: 'State Portals', icon: <DollarSign size={14} />, tooltip: 'State PDS Transparency Portals Directory', testId: 'ribbon-state-portals' },
+          ].map((item) => {
+            const isActive = activeTab === item.key;
+            return (
+              <button
+                key={item.key}
+                type="button"
+                className={`gov-ribbon-btn ${isActive ? 'active' : ''}`}
+                onClick={() => {
+                  onNavigateTab(item.key);
+                  const el = document.getElementById('main-content');
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                title={item.tooltip}
+                aria-label={item.label}
+                aria-current={isActive ? 'page' : undefined}
+                id={item.testId}
+              >
+                {item.icon}
+                <span>{item.label}</span>
+                {isActive && <span className="gov-ribbon-indicator" title="Active View" />}
+              </button>
+            );
+          })}
         </div>
 
-        <div style={{ fontSize: '0.7rem', color: 'var(--civic-emerald-text)', fontWeight: 600, whiteSpace: 'nowrap' }}>
-          ● Nationwide ePoS Network Active (99.4%)
+        <div style={{ fontSize: '0.7rem', color: 'var(--civic-emerald-text)', fontWeight: 600, whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--civic-emerald-text)' }} />
+          <span>Nationwide ePoS Network Active (99.4%)</span>
         </div>
       </div>
 

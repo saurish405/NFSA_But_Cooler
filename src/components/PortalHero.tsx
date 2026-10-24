@@ -11,11 +11,12 @@ import {
   MapPin,
   CheckCircle2,
 } from 'lucide-react';
+import type { PortalNavigationTab } from '../types';
 import seedData from '../data/dataset.json';
 
 interface PortalHeroProps {
   onOpenAskNicci: () => void;
-  onNavigateTab: (tab: 'roster_sim' | 'portability' | 'lifecycle' | 'grievance' | 'inspector' | 'state_portals') => void;
+  onNavigateTab: (tab: PortalNavigationTab) => void;
 }
 
 export const PortalHero: React.FC<PortalHeroProps> = ({ onOpenAskNicci, onNavigateTab }) => {
@@ -60,7 +61,7 @@ export const PortalHero: React.FC<PortalHeroProps> = ({ onOpenAskNicci, onNaviga
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => onNavigateTab('roster_sim')}
+                onClick={() => onNavigateTab('ration_cards')}
                 id="hero-btn-check-quota"
               >
                 <Sparkles size={14} />
@@ -71,7 +72,7 @@ export const PortalHero: React.FC<PortalHeroProps> = ({ onOpenAskNicci, onNaviga
               <button
                 type="button"
                 className="btn btn-secondary"
-                onClick={() => onNavigateTab('portability')}
+                onClick={() => onNavigateTab('onorc')}
                 id="hero-btn-onorc"
               >
                 <Compass size={14} />

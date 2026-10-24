@@ -3,6 +3,7 @@ import type {
   DraftLifecycleRecord,
   JudgeFaultConfig,
   RationCard,
+  PortalNavigationTab,
 } from './types';
 import seedData from './data/dataset.json';
 import { initializeDatabaseWithSeed, executeKioskBurnSanitation } from './services/db';
@@ -20,6 +21,10 @@ import { InspectorSignals } from './components/InspectorSignals';
 import { StatePortalsDirectory } from './components/StatePortalsDirectory';
 import { PictorialView } from './components/PictorialView';
 import { JudgeDebugHUD } from './components/JudgeDebugHUD';
+import { FoodgrainsBulletinView } from './components/FoodgrainsBulletinView';
+import { FpsLocatorView } from './components/FpsLocatorView';
+import { AllocationPolicyView } from './components/AllocationPolicyView';
+import { AnnavitranView } from './components/AnnavitranView';
 import {
   Sparkles,
   Compass,
@@ -28,12 +33,17 @@ import {
   Activity,
   Flame,
   MapPin,
+  FileText,
+  Store,
+  CreditCard,
+  Truck,
+  Users,
 } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [cards] = useState<RationCard[]>(seedData.rationCards as RationCard[]);
   const [selectedCardNumber, setSelectedCardNumber] = useState<string>(cards[0].cardNumber);
-  const [activeTab, setActiveTab] = useState<'roster_sim' | 'portability' | 'lifecycle' | 'grievance' | 'inspector' | 'state_portals'>('roster_sim');
+  const [activeTab, setActiveTab] = useState<PortalNavigationTab>('ration_cards');
   const [viewMode, setViewMode] = useState<'structured' | 'pictorial'>('structured');
   const [isKioskMode, setIsKioskMode] = useState<boolean>(false);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
@@ -83,16 +93,20 @@ export const App: React.FC = () => {
         } else if (e.key === 'k' || e.key === 'K') {
           handleBurnKioskSession();
         } else if (e.key === '1') {
-          setActiveTab('roster_sim');
+          setActiveTab('ration_cards');
         } else if (e.key === '2') {
-          setActiveTab('portability');
+          setActiveTab('onorc');
         } else if (e.key === '3') {
-          setActiveTab('lifecycle');
+          setActiveTab('bulletin');
         } else if (e.key === '4') {
-          setActiveTab('grievance');
+          setActiveTab('fps_locator');
         } else if (e.key === '5') {
-          setActiveTab('inspector');
+          setActiveTab('allocation');
         } else if (e.key === '6') {
+          setActiveTab('citizen_corner');
+        } else if (e.key === '7') {
+          setActiveTab('annavitran');
+        } else if (e.key === '8') {
           setActiveTab('state_portals');
         }
       }
@@ -115,7 +129,7 @@ export const App: React.FC = () => {
     const result = await executeKioskBurnSanitation();
     setBurnNotice(`Zero-Trace Kiosk Wipe Executed: ${result.wipedKeys} session keys flushed. Storage residue: 0 Bytes.`);
     setViewMode('structured');
-    setActiveTab('roster_sim');
+    setActiveTab('ration_cards');
     setTimeout(() => setBurnNotice(null), 5000);
   };
 
@@ -150,7 +164,7 @@ export const App: React.FC = () => {
     );
     if (match) {
       setSelectedCardNumber(match.cardNumber);
-      setActiveTab('roster_sim');
+      setActiveTab('ration_cards');
     } else {
       alert(`No active demo ration card matched "${query}". Loaded default Bihar household mandate.`);
     }
@@ -160,7 +174,20 @@ export const App: React.FC = () => {
     const match = cards.find((c) => c.homeState.toLowerCase() === stateName.toLowerCase());
     if (match) {
       setSelectedCardNumber(match.cardNumber);
-      setActiveTab('roster_sim');
+      setActiveTab('ration_cards');
+    }
+  };
+
+  // Safe navigation normalizer
+  const handleNavigate = (tab: PortalNavigationTab) => {
+    if (tab === 'roster_sim') {
+      setActiveTab('ration_cards');
+    } else if (tab === 'portability') {
+      setActiveTab('onorc');
+    } else if (tab === 'grievance') {
+      setActiveTab('citizen_corner');
+    } else {
+      setActiveTab(tab);
     }
   };
 
@@ -186,7 +213,7 @@ export const App: React.FC = () => {
         onAutoBurn={handleBurnKioskSession}
       />
 
-      {/* Official Government Portal Header & Services Ribbon */}
+      {/* Official Government Portal Header & 8-Service Ribbon (As seen on real nfsa.gov.in) */}
       <OfficialGovHeader
         viewMode={viewMode}
         onToggleViewMode={() => setViewMode((v) => (v === 'structured' ? 'pictorial' : 'structured'))}
@@ -197,7 +224,7 @@ export const App: React.FC = () => {
         onVoiceReadback={handleVoiceReadback}
         theme={theme}
         onToggleTheme={handleToggleTheme}
-        onNavigateTab={(tab) => setActiveTab(tab)}
+        onNavigateTab={handleNavigate}
         activeTab={activeTab}
         onSearchCard={handleSearchCard}
       />
@@ -225,27 +252,77 @@ export const App: React.FC = () => {
         </div>
       )}
 
-      {/* Secondary Tab Navigation Subheader (Smart Citizen Operations Center) */}
+      {/* Secondary Tab Navigation Subheader (Operations Center) */}
       <nav className="tab-subheader" aria-label="Capability Engines">
         <div className="tab-group">
           <button
             type="button"
-            className={`tab-btn ${activeTab === 'roster_sim' ? 'active' : ''}`}
-            onClick={() => setActiveTab('roster_sim')}
+            className={`tab-btn ${activeTab === 'ration_cards' || (activeTab as string) === 'roster_sim' ? 'active' : ''}`}
+            onClick={() => setActiveTab('ration_cards')}
             id="tab-roster-sim"
           >
-            <Sparkles size={15} />
-            <span>Roster & Safe-Correction Simulator</span>
+            <CreditCard size={15} />
+            <span>Ration Cards & Simulator</span>
           </button>
 
           <button
             type="button"
-            className={`tab-btn ${activeTab === 'portability' ? 'active' : ''}`}
-            onClick={() => setActiveTab('portability')}
+            className={`tab-btn ${activeTab === 'onorc' || (activeTab as string) === 'portability' ? 'active' : ''}`}
+            onClick={() => setActiveTab('onorc')}
             id="tab-portability"
           >
             <Compass size={15} />
-            <span>"What Can I Do Today?" Portability Engine</span>
+            <span>"What Can I Do Today?" Portability</span>
+          </button>
+
+          <button
+            type="button"
+            className={`tab-btn ${activeTab === 'bulletin' ? 'active' : ''}`}
+            onClick={() => setActiveTab('bulletin')}
+            id="tab-bulletin"
+          >
+            <FileText size={15} />
+            <span>Foodgrains Bulletin</span>
+          </button>
+
+          <button
+            type="button"
+            className={`tab-btn ${activeTab === 'fps_locator' ? 'active' : ''}`}
+            onClick={() => setActiveTab('fps_locator')}
+            id="tab-fps"
+          >
+            <Store size={15} />
+            <span>Fair Price Shop Radar</span>
+          </button>
+
+          <button
+            type="button"
+            className={`tab-btn ${activeTab === 'allocation' ? 'active' : ''}`}
+            onClick={() => setActiveTab('allocation')}
+            id="tab-allocation"
+          >
+            <Truck size={15} />
+            <span>Allocation Policy</span>
+          </button>
+
+          <button
+            type="button"
+            className={`tab-btn ${activeTab === 'citizen_corner' || (activeTab as string) === 'grievance' ? 'active' : ''}`}
+            onClick={() => setActiveTab('citizen_corner')}
+            id="tab-grievance"
+          >
+            <Users size={15} />
+            <span>Citizen Corner & Grievances</span>
+          </button>
+
+          <button
+            type="button"
+            className={`tab-btn ${activeTab === 'annavitran' ? 'active' : ''}`}
+            onClick={() => setActiveTab('annavitran')}
+            id="tab-annavitran"
+          >
+            <Activity size={15} />
+            <span>Annavitran Telemetry</span>
           </button>
 
           <button
@@ -255,17 +332,7 @@ export const App: React.FC = () => {
             id="tab-lifecycle"
           >
             <FileCheck size={15} />
-            <span>Draft Lifecycles & Shortcode Receipts ({drafts.length})</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'grievance' ? 'active' : ''}`}
-            onClick={() => setActiveTab('grievance')}
-            id="tab-grievance"
-          >
-            <FileWarning size={15} />
-            <span>Grievance SLA & Tier-2 Escalation</span>
+            <span>Draft Lifecycles ({drafts.length})</span>
           </button>
 
           <button
@@ -275,7 +342,7 @@ export const App: React.FC = () => {
             id="tab-inspector"
           >
             <Activity size={15} />
-            <span>Inspector Anomaly Signals</span>
+            <span>Inspector Signals</span>
           </button>
 
           <button
@@ -285,13 +352,13 @@ export const App: React.FC = () => {
             id="tab-state-portals"
           >
             <MapPin size={15} />
-            <span>State Transparency Portals</span>
+            <span>State Portals</span>
           </button>
         </div>
 
         {/* Hotkey Guide Hint for judges & accessibility */}
         <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-          Keyboard: <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+D</kbd> View • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+A</kbd> Voice • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+K</kbd> Burn • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+1..6</kbd> Tabs
+          Keyboard: <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+D</kbd> View • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+A</kbd> Voice • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+K</kbd> Burn • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+1..8</kbd> Tabs
         </div>
       </nav>
 
@@ -300,7 +367,7 @@ export const App: React.FC = () => {
         {/* National Portal Hero Banner & Real-time Metrics (Present on top for civic context) */}
         <PortalHero
           onOpenAskNicci={() => setIsAskNicciOpen(true)}
-          onNavigateTab={(tab) => setActiveTab(tab)}
+          onNavigateTab={handleNavigate}
         />
 
         {/* Dual Interface Switch: Pictorial View vs Structured View */}
@@ -308,7 +375,22 @@ export const App: React.FC = () => {
           <PictorialView card={activeCard} />
         ) : (
           <div>
-            {activeTab === 'roster_sim' && (
+            {/* 1. Foodgrains Bulletin */}
+            {activeTab === 'bulletin' && (
+              <FoodgrainsBulletinView />
+            )}
+
+            {/* 2. Fair Price Shop */}
+            {activeTab === 'fps_locator' && (
+              <FpsLocatorView
+                onSelectFpsForPortability={(_fpsId) => {
+                  setActiveTab('onorc');
+                }}
+              />
+            )}
+
+            {/* 3. Ration Cards & Simulator */}
+            {(activeTab === 'ration_cards' || (activeTab as string) === 'roster_sim') && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <RosterStructuredView
                   card={activeCard}
@@ -328,10 +410,34 @@ export const App: React.FC = () => {
               </div>
             )}
 
-            {activeTab === 'portability' && (
+            {/* 4. Allocation Policy */}
+            {activeTab === 'allocation' && (
+              <AllocationPolicyView
+                onNavigateToSimulator={() => setActiveTab('ration_cards')}
+              />
+            )}
+
+            {/* 5. Citizen Corner & Grievances */}
+            {(activeTab === 'citizen_corner' || (activeTab as string) === 'grievance') && (
+              <GrievanceEscalation />
+            )}
+
+            {/* 6. Annavitran Live ePoS Telemetry */}
+            {activeTab === 'annavitran' && (
+              <AnnavitranView />
+            )}
+
+            {/* 7. IMPDS / ONORC Portability */}
+            {(activeTab === 'onorc' || (activeTab as string) === 'portability') && (
               <PortabilityCalculator card={activeCard} />
             )}
 
+            {/* 8. State Portals */}
+            {activeTab === 'state_portals' && (
+              <StatePortalsDirectory onSelectStateCard={handleSelectStateCard} />
+            )}
+
+            {/* 9. Lifecycle Drafts */}
             {activeTab === 'lifecycle' && (
               <LifecycleDrafts
                 drafts={drafts}
@@ -339,16 +445,9 @@ export const App: React.FC = () => {
               />
             )}
 
-            {activeTab === 'grievance' && (
-              <GrievanceEscalation />
-            )}
-
+            {/* 10. Inspector Signals */}
             {activeTab === 'inspector' && (
               <InspectorSignals />
-            )}
-
-            {activeTab === 'state_portals' && (
-              <StatePortalsDirectory onSelectStateCard={handleSelectStateCard} />
             )}
           </div>
         )}
@@ -358,7 +457,7 @@ export const App: React.FC = () => {
       <AskNicciModal
         isOpen={isAskNicciOpen}
         onClose={() => setIsAskNicciOpen(false)}
-        onNavigateTab={(tab) => setActiveTab(tab)}
+        onNavigateTab={handleNavigate}
       />
 
       {/* Live Judge Fault Injection & Automated Test Suite Controller */}

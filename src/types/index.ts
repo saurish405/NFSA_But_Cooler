@@ -229,3 +229,19 @@ export interface NationalStats {
   onorcMonthlyPortabilityLakh: string;
 }
 
+export type PortalNavigationTab =
+  | 'bulletin'
+  | 'fps_locator'
+  | 'ration_cards'
+  | 'allocation'
+  | 'citizen_corner'
+  | 'annavitran'
+  | 'onorc'
+  | 'state_portals'
+  | 'lifecycle'
+  | 'inspector'
+  | 'roster_sim'
+  | 'portability'
+  | 'grievance';
+
+
