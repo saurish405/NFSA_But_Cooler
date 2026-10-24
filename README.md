@@ -244,9 +244,33 @@ npm run dev
 | `Alt + 3` | Switch to Draft Lifecycles & Shortcode Receipts |
 | `Alt + 4` | Switch to Grievance SLA & Auto-Escalation |
 | `Alt + 5` | Switch to Inspector Anomaly Signals |
+| `Alt + 6` | Switch to State Transparency Portals Directory |
 
 ---
 
-## 8. License & Acknowledgments
+## 8. Official GOI (`nfsa.gov.in`) Revamp Integration
 
-Developed for **Challenge 17: NFSA Portal Modernization**. Built in compliance with the National Food Security Act (NFSA) 2013 and One Nation One Ration Card (ONORC) directives.
+The application integrates official styling, layout, and service access points modeled on the Department of Food & Public Distribution's national portal:
+
+1. **Official Government Utility Bar:**
+   - Ashoka Lion Capital insignia & Ministry of Consumer Affairs, Food & Public Distribution bilingual headings.
+   - Accessible font size scaler (`-A`, `A`, `+A`) adjusting root REM scales live.
+   - Bilingual language selector (English / हिन्दी).
+   - Departmental & CSC VLE Single Sign-On (SSO) modal.
+2. **Global Universal Search:**
+   - Universal search across Ration Card numbers (e.g. `BR-PAT-2024-884920`), beneficiary names, and Aadhaar numbers with instant card loading.
+3. **Official Quick-Services Ribbon:**
+   - 8 direct service gateways: Foodgrains Bulletin, Fair Price Shop Locator, Ration Cards, Allocation Policies, Citizen Corner, Annavitran POS Dashboard, IMPDS (ONORC), and State Portals.
+4. **National Civic Mission Banner & Real-Time Metrics Strip:**
+   - Live operational statistics: 80.72 Cr beneficiaries covered, 19.85 Cr active cards, 5.38 Lakh Fair Price Shops (99.4% ePoS active), and 55.4 Lakh MT monthly grain allocations.
+5. **Interactive "Ask NICCI" Virtual Assistant:**
+   - Interactive FAQ drawer addressing common citizen inquiries (age corrections, interstate migration, ePoS biometric failures) with direct action shortcuts.
+6. **State Food & Transparency Portals Directory:**
+   - Comprehensive directory covering all 36 States & UTs with direct links, regional names, active FPS/ePoS counts, and verified toll-free helplines (1967).
+
+---
+
+## 9. License & Acknowledgments
+
+Developed for **Challenge 17: NFSA Portal Modernization**. Built in compliance with the National Food Security Act (NFSA) 2013 and One Nation One Ration Card (ONORC) directives. Model layout inspired by the official Government of India portal `https://nfsa.gov.in/`.
+

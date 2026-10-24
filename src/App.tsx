@@ -7,7 +7,9 @@ import type {
 import seedData from './data/dataset.json';
 import { initializeDatabaseWithSeed, executeKioskBurnSanitation } from './services/db';
 import { speechEngine } from './services/speechEngine';
-import { Navbar } from './components/Navbar';
+import { OfficialGovHeader } from './components/OfficialGovHeader';
+import { PortalHero } from './components/PortalHero';
+import { AskNicciModal } from './components/AskNicciModal';
 import { KioskTimerBar } from './components/KioskTimerBar';
 import { RosterStructuredView } from './components/RosterStructuredView';
 import { SafeCorrectionSimulator } from './components/SafeCorrectionSimulator';
@@ -15,6 +17,7 @@ import { PortabilityCalculator } from './components/PortabilityCalculator';
 import { LifecycleDrafts } from './components/LifecycleDrafts';
 import { GrievanceEscalation } from './components/GrievanceEscalation';
 import { InspectorSignals } from './components/InspectorSignals';
+import { StatePortalsDirectory } from './components/StatePortalsDirectory';
 import { PictorialView } from './components/PictorialView';
 import { JudgeDebugHUD } from './components/JudgeDebugHUD';
 import {
@@ -24,19 +27,20 @@ import {
   FileWarning,
   Activity,
   Flame,
-  CheckCircle2,
+  MapPin,
 } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [cards, setCards] = useState<RationCard[]>(seedData.rationCards as RationCard[]);
+  const [cards] = useState<RationCard[]>(seedData.rationCards as RationCard[]);
   const [selectedCardNumber, setSelectedCardNumber] = useState<string>(cards[0].cardNumber);
-  const [activeTab, setActiveTab] = useState<'roster_sim' | 'portability' | 'lifecycle' | 'grievance' | 'inspector'>('roster_sim');
+  const [activeTab, setActiveTab] = useState<'roster_sim' | 'portability' | 'lifecycle' | 'grievance' | 'inspector' | 'state_portals'>('roster_sim');
   const [viewMode, setViewMode] = useState<'structured' | 'pictorial'>('structured');
   const [isKioskMode, setIsKioskMode] = useState<boolean>(false);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [drafts, setDrafts] = useState<DraftLifecycleRecord[]>([]);
   const [burnNotice, setBurnNotice] = useState<string | null>(null);
+  const [isAskNicciOpen, setIsAskNicciOpen] = useState<boolean>(false);
 
   // Judge Fault Bus
   const [faultConfig, setFaultConfig] = useState<JudgeFaultConfig>({
@@ -88,6 +92,8 @@ export const App: React.FC = () => {
           setActiveTab('grievance');
         } else if (e.key === '5') {
           setActiveTab('inspector');
+        } else if (e.key === '6') {
+          setActiveTab('state_portals');
         }
       }
     };
@@ -134,6 +140,30 @@ export const App: React.FC = () => {
     setDrafts((prev) => prev.map((d) => (d.id === updated.id ? updated : d)));
   };
 
+  const handleSearchCard = (query: string) => {
+    const q = query.toLowerCase();
+    const match = cards.find(
+      (c) =>
+        c.cardNumber.toLowerCase().includes(q) ||
+        c.homeState.toLowerCase().includes(q) ||
+        c.members.some((m) => m.name.toLowerCase().includes(q) || m.aadhaarMasked.includes(q))
+    );
+    if (match) {
+      setSelectedCardNumber(match.cardNumber);
+      setActiveTab('roster_sim');
+    } else {
+      alert(`No active demo ration card matched "${query}". Loaded default Bihar household mandate.`);
+    }
+  };
+
+  const handleSelectStateCard = (stateName: string) => {
+    const match = cards.find((c) => c.homeState.toLowerCase() === stateName.toLowerCase());
+    if (match) {
+      setSelectedCardNumber(match.cardNumber);
+      setActiveTab('roster_sim');
+    }
+  };
+
   // Determine if active draft has unverified watermark
   const hasActiveUnverifiedDraft = drafts.some(
     (d) => d.status === 'LOCAL_DRAFT' || d.status === 'FACILITATOR_STAGED_BATCH'
@@ -156,8 +186,8 @@ export const App: React.FC = () => {
         onAutoBurn={handleBurnKioskSession}
       />
 
-      {/* Primary Navigation Bar */}
-      <Navbar
+      {/* Official Government Portal Header & Services Ribbon */}
+      <OfficialGovHeader
         viewMode={viewMode}
         onToggleViewMode={() => setViewMode((v) => (v === 'structured' ? 'pictorial' : 'structured'))}
         isKioskMode={isKioskMode}
@@ -167,17 +197,20 @@ export const App: React.FC = () => {
         onVoiceReadback={handleVoiceReadback}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        onNavigateTab={(tab) => setActiveTab(tab)}
+        activeTab={activeTab}
+        onSearchCard={handleSearchCard}
       />
 
       {/* Burn Notice Alert Banner */}
       {burnNotice && (
         <div
           style={{
-            background: 'rgba(16, 185, 129, 0.2)',
-            borderBottom: '1px solid #10b981',
+            background: 'var(--status-safe-bg)',
+            borderBottom: '1px solid var(--status-safe-border)',
             padding: '0.65rem 1.5rem',
-            color: '#34d399',
-            fontSize: '0.85rem',
+            color: 'var(--status-safe-text)',
+            fontSize: '0.825rem',
             fontWeight: 700,
             display: 'flex',
             alignItems: 'center',
@@ -192,7 +225,7 @@ export const App: React.FC = () => {
         </div>
       )}
 
-      {/* Secondary Tab Navigation Subheader */}
+      {/* Secondary Tab Navigation Subheader (Smart Citizen Operations Center) */}
       <nav className="tab-subheader" aria-label="Capability Engines">
         <div className="tab-group">
           <button
@@ -201,7 +234,7 @@ export const App: React.FC = () => {
             onClick={() => setActiveTab('roster_sim')}
             id="tab-roster-sim"
           >
-            <Sparkles size={16} />
+            <Sparkles size={15} />
             <span>Roster & Safe-Correction Simulator</span>
           </button>
 
@@ -211,7 +244,7 @@ export const App: React.FC = () => {
             onClick={() => setActiveTab('portability')}
             id="tab-portability"
           >
-            <Compass size={16} />
+            <Compass size={15} />
             <span>"What Can I Do Today?" Portability Engine</span>
           </button>
 
@@ -221,7 +254,7 @@ export const App: React.FC = () => {
             onClick={() => setActiveTab('lifecycle')}
             id="tab-lifecycle"
           >
-            <FileCheck size={16} />
+            <FileCheck size={15} />
             <span>Draft Lifecycles & Shortcode Receipts ({drafts.length})</span>
           </button>
 
@@ -231,7 +264,7 @@ export const App: React.FC = () => {
             onClick={() => setActiveTab('grievance')}
             id="tab-grievance"
           >
-            <FileWarning size={16} />
+            <FileWarning size={15} />
             <span>Grievance SLA & Tier-2 Escalation</span>
           </button>
 
@@ -241,19 +274,35 @@ export const App: React.FC = () => {
             onClick={() => setActiveTab('inspector')}
             id="tab-inspector"
           >
-            <Activity size={16} />
+            <Activity size={15} />
             <span>Inspector Anomaly Signals</span>
+          </button>
+
+          <button
+            type="button"
+            className={`tab-btn ${activeTab === 'state_portals' ? 'active' : ''}`}
+            onClick={() => setActiveTab('state_portals')}
+            id="tab-state-portals"
+          >
+            <MapPin size={15} />
+            <span>State Transparency Portals</span>
           </button>
         </div>
 
-        {/* Hotkey Guide Hint for judges & power accessibility */}
+        {/* Hotkey Guide Hint for judges & accessibility */}
         <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-          Keyboard: <kbd style={{ padding: '0.1rem 0.3rem', background: 'rgba(255,255,255,0.1)', borderRadius: '3px' }}>Alt+D</kbd> View • <kbd style={{ padding: '0.1rem 0.3rem', background: 'rgba(255,255,255,0.1)', borderRadius: '3px' }}>Alt+A</kbd> Voice • <kbd style={{ padding: '0.1rem 0.3rem', background: 'rgba(255,255,255,0.1)', borderRadius: '3px' }}>Alt+1..5</kbd> Tabs
+          Keyboard: <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+D</kbd> View • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+A</kbd> Voice • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+K</kbd> Burn • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+1..6</kbd> Tabs
         </div>
       </nav>
 
       {/* Main Workspace Area */}
       <main className="main-content" id="main-content" role="main">
+        {/* National Portal Hero Banner & Real-time Metrics (Present on top for civic context) */}
+        <PortalHero
+          onOpenAskNicci={() => setIsAskNicciOpen(true)}
+          onNavigateTab={(tab) => setActiveTab(tab)}
+        />
+
         {/* Dual Interface Switch: Pictorial View vs Structured View */}
         {viewMode === 'pictorial' ? (
           <PictorialView card={activeCard} />
@@ -264,7 +313,7 @@ export const App: React.FC = () => {
                 <RosterStructuredView
                   card={activeCard}
                   onSelectCard={(num) => setSelectedCardNumber(num)}
-                  onLaunchCorrection={(memberId) => {
+                  onLaunchCorrection={() => {
                     const el = document.getElementById('safe-correction-section');
                     el?.scrollIntoView({ behavior: 'smooth' });
                   }}
@@ -297,9 +346,20 @@ export const App: React.FC = () => {
             {activeTab === 'inspector' && (
               <InspectorSignals />
             )}
+
+            {activeTab === 'state_portals' && (
+              <StatePortalsDirectory onSelectStateCard={handleSelectStateCard} />
+            )}
           </div>
         )}
       </main>
+
+      {/* ASK NICCI Interactive Citizen Assistant Modal */}
+      <AskNicciModal
+        isOpen={isAskNicciOpen}
+        onClose={() => setIsAskNicciOpen(false)}
+        onNavigateTab={(tab) => setActiveTab(tab)}
+      />
 
       {/* Live Judge Fault Injection & Automated Test Suite Controller */}
       <JudgeDebugHUD

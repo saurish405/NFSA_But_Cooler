@@ -527,5 +527,125 @@
         "timeoutHandled": true
       }
     }
+  ],
+  "nationalStats": {
+    "beneficiariesCoveredCr": "80.72",
+    "activeRationCardsCr": "19.85",
+    "fairPriceShopsTotal": "5,38,241",
+    "eposOperationalPercent": "99.4%",
+    "monthlyAllocationLakhMT": "55.4",
+    "onorcMonthlyPortabilityLakh": "125.8"
+  },
+  "statePortals": [
+    {
+      "code": "BR",
+      "name": "Bihar",
+      "regionalName": "बिहार",
+      "portalUrl": "http://epds.bihar.gov.in/",
+      "fpsCount": 55120,
+      "eposCount": 54980,
+      "tollFree": "1800-3456-194",
+      "dbtActive": true,
+      "onorcActive": true
+    },
+    {
+      "code": "AP",
+      "name": "Andhra Pradesh",
+      "regionalName": "ఆంధ్రప్రదేశ్",
+      "portalUrl": "https://epds2.ap.gov.in/",
+      "fpsCount": 29810,
+      "eposCount": 29810,
+      "tollFree": "1967",
+      "dbtActive": true,
+      "onorcActive": true
+    },
+    {
+      "code": "UP",
+      "name": "Uttar Pradesh",
+      "regionalName": "उत्तर प्रदेश",
+      "portalUrl": "https://fcs.up.gov.in/",
+      "fpsCount": 79140,
+      "eposCount": 78920,
+      "tollFree": "1800-1800-150",
+      "dbtActive": true,
+      "onorcActive": true
+    },
+    {
+      "code": "MH",
+      "name": "Maharashtra",
+      "regionalName": "महाराष्ट्र",
+      "portalUrl": "http://mahafood.gov.in/",
+      "fpsCount": 52400,
+      "eposCount": 52190,
+      "tollFree": "1800-224-950",
+      "dbtActive": true,
+      "onorcActive": true
+    },
+    {
+      "code": "RJ",
+      "name": "Rajasthan",
+      "regionalName": "राजस्थान",
+      "portalUrl": "http://food.raj.nic.in/",
+      "fpsCount": 26900,
+      "eposCount": 26850,
+      "tollFree": "181",
+      "dbtActive": true,
+      "onorcActive": true
+    },
+    {
+      "code": "TN",
+      "name": "Tamil Nadu",
+      "regionalName": "தமிழ்நாடு",
+      "portalUrl": "https://www.tnpds.gov.in/",
+      "fpsCount": 35200,
+      "eposCount": 35200,
+      "tollFree": "1967",
+      "dbtActive": true,
+      "onorcActive": true
+    },
+    {
+      "code": "KA",
+      "name": "Karnataka",
+      "regionalName": "ಕರ್ನಾಟಕ",
+      "portalUrl": "http://ahara.kar.nic.in/",
+      "fpsCount": 20450,
+      "eposCount": 20450,
+      "tollFree": "1967",
+      "dbtActive": true,
+      "onorcActive": true
+    },
+    {
+      "code": "WB",
+      "name": "West Bengal",
+      "regionalName": "পশ্চিমবঙ্গ",
+      "portalUrl": "https://food.wb.gov.in/",
+      "fpsCount": 20890,
+      "eposCount": 20850,
+      "tollFree": "1967",
+      "dbtActive": true,
+      "onorcActive": true
+    }
+  ],
+  "nicciFaq": [
+    {
+      "q": "How does the Pre-Flight Safe-Correction Simulator protect my family?",
+      "a": "Before any change is saved or sent to the government server, our simulator calculates the exact entitlement impact (ΔE). If updating age from 17 to 18 classifies Ramesh as an independent adult under State Rule 4B, the simulator warns you of the 5kg loss before you submit and tells you which affidavit (Form 3B) is needed to protect your quota."
+    },
+    {
+      "q": "How does One Nation One Ration Card (ONORC) work if my family is split across states?",
+      "a": "Our engine partitions quotas dynamically. If 2 members migrate to Andhra Pradesh while 3 members stay in Bihar, the migrant members can draw their exact 10kg allocation in AP without locking or reducing the 15kg remaining for the family back in Bihar."
+    },
+    {
+      "q": "Can secondary family members draw grain when the Head of Household (HoH) is absent?",
+      "a": "Yes! Standard grain collection is 100% permitted for authenticated secondary members. However, structural modifications like card surrender or bank account changes are locked to protect against fraud."
+    },
+    {
+      "q": "What happens if a Fair Price Shop runs out of stock or ePoS fails?",
+      "a": "The Stock Mirage engine detects zero inventory and automatically recommends the nearest alternate FPS within 3 km with live confidence ratings. Furthermore, if wheat is depleted but rice is available, you can draw rice today without losing your wheat entitlement."
+    },
+    {
+      "q": "What is the statutory 14-day SLA under Section 15 of NFSA 2013?",
+      "a": "State Food Commissions and Taluk Supply Officers must resolve PDS grievances within 14 business days. If breached, NFSA_But_Cooler automatically compiles an appeal memorandum addressed directly to the District Collector and generates 1-click WhatsApp/SMS escalation dispatches."
+    }
   ]
 }

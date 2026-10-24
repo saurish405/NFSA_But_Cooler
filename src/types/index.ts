@@ -207,3 +207,25 @@ export interface QuantitativeMetrics {
   screenReaderKeyboardFlow: string;
   offlineSyncRecoveryLatency: string;
 }
+
+export interface StatePortalInfo {
+  code: string;
+  name: string;
+  regionalName: string;
+  portalUrl: string;
+  fpsCount: number;
+  eposCount: number;
+  tollFree: string;
+  dbtActive: boolean;
+  onorcActive: boolean;
+}
+
+export interface NationalStats {
+  beneficiariesCoveredCr: string;
+  activeRationCardsCr: string;
+  fairPriceShopsTotal: string;
+  eposOperationalPercent: string;
+  monthlyAllocationLakhMT: string;
+  onorcMonthlyPortabilityLakh: string;
+}
+
