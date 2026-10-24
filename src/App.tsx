@@ -9,7 +9,8 @@ import seedData from './data/dataset.json';
 import { initializeDatabaseWithSeed, executeKioskBurnSanitation } from './services/db';
 import { speechEngine } from './services/speechEngine';
 import { OfficialGovHeader } from './components/OfficialGovHeader';
-import { PortalHero } from './components/PortalHero';
+import { NavigationSidebar } from './components/NavigationSidebar';
+import { NationalLandingView } from './components/NationalLandingView';
 import { AskNicciModal } from './components/AskNicciModal';
 import { KioskTimerBar } from './components/KioskTimerBar';
 import { RosterStructuredView } from './components/RosterStructuredView';
@@ -25,25 +26,13 @@ import { FoodgrainsBulletinView } from './components/FoodgrainsBulletinView';
 import { FpsLocatorView } from './components/FpsLocatorView';
 import { AllocationPolicyView } from './components/AllocationPolicyView';
 import { AnnavitranView } from './components/AnnavitranView';
-import {
-  Sparkles,
-  Compass,
-  FileCheck,
-  FileWarning,
-  Activity,
-  Flame,
-  MapPin,
-  FileText,
-  Store,
-  CreditCard,
-  Truck,
-  Users,
-} from 'lucide-react';
+import { Flame } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [cards] = useState<RationCard[]>(seedData.rationCards as RationCard[]);
   const [selectedCardNumber, setSelectedCardNumber] = useState<string>(cards[0].cardNumber);
-  const [activeTab, setActiveTab] = useState<PortalNavigationTab>('ration_cards');
+  const [activeTab, setActiveTab] = useState<PortalNavigationTab>('landing');
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [viewMode, setViewMode] = useState<'structured' | 'pictorial'>('structured');
   const [isKioskMode, setIsKioskMode] = useState<boolean>(false);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
@@ -92,6 +81,10 @@ export const App: React.FC = () => {
           handleVoiceReadback();
         } else if (e.key === 'k' || e.key === 'K') {
           handleBurnKioskSession();
+        } else if (e.key === 'm' || e.key === 'M') {
+          setIsSidebarOpen((v) => !v);
+        } else if (e.key === '0') {
+          setActiveTab('landing');
         } else if (e.key === '1') {
           setActiveTab('ration_cards');
         } else if (e.key === '2') {
@@ -129,7 +122,7 @@ export const App: React.FC = () => {
     const result = await executeKioskBurnSanitation();
     setBurnNotice(`Zero-Trace Kiosk Wipe Executed: ${result.wipedKeys} session keys flushed. Storage residue: 0 Bytes.`);
     setViewMode('structured');
-    setActiveTab('ration_cards');
+    setActiveTab('landing');
     setTimeout(() => setBurnNotice(null), 5000);
   };
 
@@ -213,7 +206,7 @@ export const App: React.FC = () => {
         onAutoBurn={handleBurnKioskSession}
       />
 
-      {/* Official Government Portal Header & 8-Service Ribbon (As seen on real nfsa.gov.in) */}
+      {/* 1st Menu: Official Government Portal Header & 8-Service Ribbon (Kept as is) */}
       <OfficialGovHeader
         viewMode={viewMode}
         onToggleViewMode={() => setViewMode((v) => (v === 'structured' ? 'pictorial' : 'structured'))}
@@ -227,6 +220,18 @@ export const App: React.FC = () => {
         onNavigateTab={handleNavigate}
         activeTab={activeTab}
         onSearchCard={handleSearchCard}
+        onOpenSidebar={() => setIsSidebarOpen(true)}
+      />
+
+      {/* 2nd Menu as a Sidebar that appears on click (Off-Canvas Drawer) */}
+      <NavigationSidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeTab={activeTab}
+        onSelectTab={handleNavigate}
+        draftsCount={drafts.length}
+        isKioskMode={isKioskMode}
+        onBurnKioskSession={handleBurnKioskSession}
       />
 
       {/* Burn Notice Alert Banner */}
@@ -252,129 +257,21 @@ export const App: React.FC = () => {
         </div>
       )}
 
-      {/* Secondary Tab Navigation Subheader (Operations Center) */}
-      <nav className="tab-subheader" aria-label="Capability Engines">
-        <div className="tab-group">
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'ration_cards' || (activeTab as string) === 'roster_sim' ? 'active' : ''}`}
-            onClick={() => setActiveTab('ration_cards')}
-            id="tab-roster-sim"
-          >
-            <CreditCard size={15} />
-            <span>Ration Cards & Simulator</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'onorc' || (activeTab as string) === 'portability' ? 'active' : ''}`}
-            onClick={() => setActiveTab('onorc')}
-            id="tab-portability"
-          >
-            <Compass size={15} />
-            <span>"What Can I Do Today?" Portability</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'bulletin' ? 'active' : ''}`}
-            onClick={() => setActiveTab('bulletin')}
-            id="tab-bulletin"
-          >
-            <FileText size={15} />
-            <span>Foodgrains Bulletin</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'fps_locator' ? 'active' : ''}`}
-            onClick={() => setActiveTab('fps_locator')}
-            id="tab-fps"
-          >
-            <Store size={15} />
-            <span>Fair Price Shop Radar</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'allocation' ? 'active' : ''}`}
-            onClick={() => setActiveTab('allocation')}
-            id="tab-allocation"
-          >
-            <Truck size={15} />
-            <span>Allocation Policy</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'citizen_corner' || (activeTab as string) === 'grievance' ? 'active' : ''}`}
-            onClick={() => setActiveTab('citizen_corner')}
-            id="tab-grievance"
-          >
-            <Users size={15} />
-            <span>Citizen Corner & Grievances</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'annavitran' ? 'active' : ''}`}
-            onClick={() => setActiveTab('annavitran')}
-            id="tab-annavitran"
-          >
-            <Activity size={15} />
-            <span>Annavitran Telemetry</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'lifecycle' ? 'active' : ''}`}
-            onClick={() => setActiveTab('lifecycle')}
-            id="tab-lifecycle"
-          >
-            <FileCheck size={15} />
-            <span>Draft Lifecycles ({drafts.length})</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'inspector' ? 'active' : ''}`}
-            onClick={() => setActiveTab('inspector')}
-            id="tab-inspector"
-          >
-            <Activity size={15} />
-            <span>Inspector Signals</span>
-          </button>
-
-          <button
-            type="button"
-            className={`tab-btn ${activeTab === 'state_portals' ? 'active' : ''}`}
-            onClick={() => setActiveTab('state_portals')}
-            id="tab-state-portals"
-          >
-            <MapPin size={15} />
-            <span>State Portals</span>
-          </button>
-        </div>
-
-        {/* Hotkey Guide Hint for judges & accessibility */}
-        <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-          Keyboard: <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+D</kbd> View • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+A</kbd> Voice • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+K</kbd> Burn • <kbd style={{ padding: '0.1rem 0.3rem', background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', borderRadius: '3px' }}>Alt+1..8</kbd> Tabs
-        </div>
-      </nav>
-
       {/* Main Workspace Area */}
       <main className="main-content" id="main-content" role="main">
-        {/* National Portal Hero Banner & Real-time Metrics (Present on top for civic context) */}
-        <PortalHero
-          onOpenAskNicci={() => setIsAskNicciOpen(true)}
-          onNavigateTab={handleNavigate}
-        />
-
         {/* Dual Interface Switch: Pictorial View vs Structured View */}
         {viewMode === 'pictorial' ? (
           <PictorialView card={activeCard} />
         ) : (
           <div>
+            {/* 0. Official National Landing Page with Image Placeholder & 3-Tab Information Desk */}
+            {activeTab === 'landing' && (
+              <NationalLandingView
+                onNavigateTab={handleNavigate}
+                onOpenAskNicci={() => setIsAskNicciOpen(true)}
+              />
+            )}
+
             {/* 1. Foodgrains Bulletin */}
             {activeTab === 'bulletin' && (
               <FoodgrainsBulletinView />

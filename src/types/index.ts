@@ -230,6 +230,7 @@ export interface NationalStats {
 }
 
 export type PortalNavigationTab =
+  | 'landing'
   | 'bulletin'
   | 'fps_locator'
   | 'ration_cards'

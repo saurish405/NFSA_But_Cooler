@@ -19,6 +19,8 @@ import {
   DollarSign,
   LogIn,
   Search,
+  Menu,
+  Home,
 } from 'lucide-react';
 
 import type { PortalNavigationTab } from '../types';
@@ -36,6 +38,7 @@ interface OfficialGovHeaderProps {
   onNavigateTab: (tab: PortalNavigationTab) => void;
   activeTab: PortalNavigationTab;
   onSearchCard: (query: string) => void;
+  onOpenSidebar: () => void;
 }
 
 export const OfficialGovHeader: React.FC<OfficialGovHeaderProps> = ({
@@ -51,6 +54,7 @@ export const OfficialGovHeader: React.FC<OfficialGovHeaderProps> = ({
   onNavigateTab,
   activeTab,
   onSearchCard,
+  onOpenSidebar,
 }) => {
   const [fontSizeMultiplier, setFontSizeMultiplier] = useState<number>(1);
   const [lang, setLang] = useState<'en' | 'hi'>('en');
@@ -173,7 +177,12 @@ export const OfficialGovHeader: React.FC<OfficialGovHeaderProps> = ({
 
       {/* 2. Main Government Emblem & Department Header */}
       <header className="top-nav" role="banner">
-        <div className="nav-brand">
+        <div
+          className="nav-brand"
+          style={{ cursor: 'pointer' }}
+          onClick={() => onNavigateTab('landing')}
+          title="Return to National Portal Landing Page"
+        >
           {/* Emblem representation */}
           <div className="brand-emblem" aria-hidden="true">
             <ShieldCheck size={22} strokeWidth={2.2} />
@@ -207,6 +216,20 @@ export const OfficialGovHeader: React.FC<OfficialGovHeaderProps> = ({
         </form>
 
         <nav className="nav-actions" aria-label="Portal Navigation Controls">
+          {/* 2nd Menu: Off-Canvas Sidebar Trigger */}
+          <button
+            type="button"
+            className="nav-toggle-btn"
+            style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', fontWeight: 700 }}
+            onClick={onOpenSidebar}
+            title="Open 2nd Menu: Capability Modules Sidebar (Alt+M)"
+            aria-label="Open sidebar modules menu"
+            id="btn-open-sidebar"
+          >
+            <Menu size={16} />
+            <span>Modules Menu</span>
+          </button>
+
           {/* Dual Interface Toggle: Structured vs Pictorial View */}
           <button
             type="button"
@@ -279,6 +302,7 @@ export const OfficialGovHeader: React.FC<OfficialGovHeaderProps> = ({
       <div className="gov-ribbon" role="navigation" aria-label="Official NFSA Services Ribbon">
         <div className="gov-ribbon-group">
           {[
+            { key: 'landing' as const, label: 'Home', icon: <Home size={14} />, tooltip: 'National Portal Landing Page', testId: 'ribbon-home' },
             { key: 'bulletin' as const, label: 'Foodgrains Bulletin', icon: <FileText size={14} />, tooltip: 'Monthly Central Pool Foodgrains Bulletin & Offtake', testId: 'ribbon-bulletin' },
             { key: 'fps_locator' as const, label: 'Fair Price Shop', icon: <Store size={14} />, tooltip: 'Fair Price Shop (FPS) Locator & Live Stock Radar', testId: 'ribbon-fps' },
             { key: 'ration_cards' as const, label: 'Ration Cards', icon: <CreditCard size={14} />, tooltip: 'Ration Card Details & Safe-Correction Simulator', testId: 'ribbon-ration-cards' },
