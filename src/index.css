@@ -72,30 +72,30 @@
 
 /* Light Theme (Clean Crisp Civic Government Portal) */
 body.theme-light {
-  --bg-primary: #f6f8fa;
+  --bg-primary: #f8fafc;
   --bg-secondary: #ffffff;
   --bg-surface: #ffffff;
   --bg-card: #ffffff;
-  --bg-card-hover: #f3f4f6;
-  --bg-elevated: #eaeef2;
-  --bg-inset: #eaeef2;
+  --bg-card-hover: #f1f5f9;
+  --bg-elevated: #f1f5f9;
+  --bg-inset: #e2e8f0;
 
-  --border-subtle: #d0d7de;
-  --border-strong: #afb8c1;
-  --border-focus: #1f2328;
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --border-focus: #0f172a;
 
-  --text-primary: #1f2328;
-  --text-secondary: #656d76;
-  --text-muted: #8c959f;
-  --text-link: #0969da;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-link: #15803d;
 
-  --status-neutral-bg: #f6f8fa;
-  --status-neutral-border: #d0d7de;
-  --status-neutral-text: #24292f;
+  --status-neutral-bg: #f8fafc;
+  --status-neutral-border: #e2e8f0;
+  --status-neutral-text: #0f172a;
 
-  --shadow-sm: 0 1px 2px rgba(31, 35, 40, 0.08);
-  --shadow-md: 0 3px 6px rgba(140, 149, 159, 0.15);
-  --shadow-lg: 0 8px 24px rgba(140, 149, 159, 0.2), 0 0 0 1px var(--border-subtle);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--border-subtle);
 }
 
 /* Reset */

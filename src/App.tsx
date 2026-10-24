@@ -36,7 +36,7 @@ export const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<'structured' | 'pictorial'>('structured');
   const [isKioskMode, setIsKioskMode] = useState<boolean>(false);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>('light');
   const [drafts, setDrafts] = useState<DraftLifecycleRecord[]>([]);
   const [burnNotice, setBurnNotice] = useState<string | null>(null);
   const [isAskNicciOpen, setIsAskNicciOpen] = useState<boolean>(false);
@@ -56,6 +56,10 @@ export const App: React.FC = () => {
   // Initialize DB & URL parameter check (?mode=csc_kiosk)
   useEffect(() => {
     initializeDatabaseWithSeed();
+
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('theme-light');
+    }
 
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
