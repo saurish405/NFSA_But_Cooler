@@ -1,7 +1,7 @@
 import React from 'react';
 import type { InspectorAnomalySignal } from '../types';
 import seedData from '../data/dataset.json';
-import { Shield, Activity, Search, AlertCircle, FileSearch, CheckCircle2 } from 'lucide-react';
+import { Activity, Search, FileSearch, CheckCircle2 } from 'lucide-react';
 
 export const InspectorSignals: React.FC = () => {
   const signals = seedData.inspectorSignals as InspectorAnomalySignal[];
@@ -11,7 +11,7 @@ export const InspectorSignals: React.FC = () => {
       <div className="card-header">
         <div>
           <div className="card-title">
-            <Activity size={20} color="#38bdf8" />
+            <Activity size={18} />
             <span>Inspector Anomaly Signal & Hypothesis Generator</span>
             <span className="badge badge-info">Elite Neutral Framing</span>
           </div>
@@ -26,16 +26,16 @@ export const InspectorSignals: React.FC = () => {
           <div
             key={sig.id}
             style={{
-              background: 'rgba(15, 23, 42, 0.75)',
+              background: 'var(--bg-card)',
               border: '1px solid var(--border-subtle)',
-              borderRadius: '12px',
+              borderRadius: 'var(--radius-md)',
               padding: '1.25rem',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 800 }}>{sig.fpsName}</h3>
+                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700 }}>{sig.fpsName}</h3>
                   <span className="badge badge-caution">Velocity Score: {sig.distributionVelocityScore}/10</span>
                 </div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
@@ -52,10 +52,10 @@ export const InspectorSignals: React.FC = () => {
 
             {/* Observed Pattern */}
             <div style={{ marginTop: '0.85rem' }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.725rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Empirical Pattern Observed:
               </div>
-              <div style={{ fontSize: '0.875rem', color: '#f8fafc', marginTop: '0.2rem', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-primary)', marginTop: '0.2rem', lineHeight: 1.4 }}>
                 {sig.patternObserved}
               </div>
             </div>
@@ -65,12 +65,12 @@ export const InspectorSignals: React.FC = () => {
               style={{
                 marginTop: '0.85rem',
                 padding: '0.85rem',
-                borderRadius: '8px',
-                background: 'rgba(56, 189, 248, 0.08)',
-                border: '1px solid rgba(56, 189, 248, 0.25)',
+                borderRadius: 'var(--radius-sm)',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border-subtle)',
               }}
             >
-              <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-accent)', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <div style={{ fontSize: '0.725rem', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                 <FileSearch size={14} />
                 <span>Non-Accusatory System Hypothesis:</span>
               </div>

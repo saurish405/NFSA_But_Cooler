@@ -8,10 +8,8 @@ import {
   Flame,
   Sun,
   Moon,
-  Keyboard,
   Compass,
 } from 'lucide-react';
-import { speechEngine } from '../services/speechEngine';
 
 interface NavbarProps {
   viewMode: 'structured' | 'pictorial';
@@ -40,12 +38,12 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="top-nav" role="banner">
       <div className="nav-brand">
         <div className="brand-emblem" aria-hidden="true">
-          <ShieldCheck size={26} strokeWidth={2.5} />
+          <ShieldCheck size={22} strokeWidth={2.2} />
         </div>
         <div className="brand-text">
           <h1>
-            AntiGravity
-            <span className="brand-badge">NFSA 2.0 • Elite</span>
+            NFSA_But_Cooler
+            <span className="brand-badge">PDS Modernization • Elite</span>
           </h1>
           <p>Zero-Runaround Public Distribution System Navigator</p>
         </div>
@@ -61,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           aria-label="Toggle pictorial mode"
           id="btn-toggle-view"
         >
-          {viewMode === 'pictorial' ? <LayoutGrid size={16} /> : <Eye size={16} />}
+          {viewMode === 'pictorial' ? <LayoutGrid size={15} /> : <Eye size={15} />}
           <span>{viewMode === 'pictorial' ? 'Pictorial View' : 'Structured Data'}</span>
         </button>
 
@@ -74,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           aria-label="Narrate current screen"
           id="btn-voice-readback"
         >
-          {isSpeaking ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          {isSpeaking ? <VolumeX size={15} /> : <Volume2 size={15} />}
           <span>{isSpeaking ? 'Stop Audio' : 'Audio Read-back'}</span>
         </button>
 
@@ -87,7 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           aria-label="Toggle Kiosk mode"
           id="btn-toggle-kiosk"
         >
-          <Compass size={16} />
+          <Compass size={15} />
           <span>{isKioskMode ? 'Kiosk: Active' : 'Kiosk Mode'}</span>
         </button>
 
@@ -96,12 +94,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             className="btn btn-danger"
-            style={{ padding: '0.4rem 0.85rem', fontSize: '0.8rem' }}
+            style={{ padding: '0.4rem 0.85rem', fontSize: '0.775rem' }}
             onClick={onBurnKioskSession}
             title="Immediately erase all session memory and temporary storage"
             id="btn-burn-exit"
           >
-            <Flame size={15} />
+            <Flame size={14} />
             <span>Burn On Exit</span>
           </button>
         )}
@@ -115,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           aria-label="Toggle theme"
           id="btn-toggle-theme"
         >
-          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
         </button>
       </nav>
     </header>

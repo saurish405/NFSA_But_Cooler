@@ -82,7 +82,7 @@ export const RosterStructuredView: React.FC<RosterStructuredViewProps> = ({
         <div className="card-header">
           <div>
             <div className="card-title">
-              <CreditCard size={20} color="#38bdf8" />
+              <CreditCard size={18} />
               <span>National Food Security Roster & Quota Ledger</span>
               <span className="badge badge-safe">{card.scheme} Scheme</span>
             </div>
@@ -147,7 +147,7 @@ export const RosterStructuredView: React.FC<RosterStructuredViewProps> = ({
       <div className="card">
         <div className="card-header">
           <div className="card-title">
-            <Users size={18} color="#38bdf8" />
+            <Users size={18} />
             <span>Family Member Composition ({card.members.length} Registered Individuals)</span>
           </div>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>

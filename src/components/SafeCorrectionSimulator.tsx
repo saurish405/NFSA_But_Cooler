@@ -101,7 +101,7 @@ export const SafeCorrectionSimulator: React.FC<SafeCorrectionSimulatorProps> = (
       <div className="card-header">
         <div>
           <div className="card-title">
-            <Sparkles size={20} color="#38bdf8" />
+            <Sparkles size={18} />
             <span>Pre-Flight Safe-Correction Simulator</span>
             <span className="badge badge-info">Zero-Runaround Guard</span>
           </div>

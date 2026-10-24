@@ -60,7 +60,7 @@ export const PortabilityCalculator: React.FC<PortabilityCalculatorProps> = ({ ca
       <div className="card-header">
         <div>
           <div className="card-title">
-            <Compass size={20} color="#38bdf8" />
+            <Compass size={18} />
             <span>"What Can I Do Today?" Portability & Stock Engine</span>
             <span className="badge badge-info">ONORC Real-Time Split</span>
           </div>
@@ -169,24 +169,24 @@ export const PortabilityCalculator: React.FC<PortabilityCalculatorProps> = ({ ca
         {/* Host State Draw Box */}
         <div
           style={{
-            background: 'rgba(56, 189, 248, 0.08)',
-            border: '1px solid rgba(56, 189, 248, 0.25)',
-            borderRadius: '12px',
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-subtle)',
+            borderRadius: 'var(--radius-md)',
             padding: '1.25rem',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-accent)' }}>
+            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)' }}>
               MIGRANT DESTINATION: {destinationState.toUpperCase()}
             </span>
             <span className="badge badge-info">{calculation.migrantMembersCount} Members Lift</span>
           </div>
 
           <div style={{ marginTop: '0.85rem', display: 'flex', alignItems: 'baseline', gap: '0.4rem' }}>
-            <span style={{ fontSize: '2.2rem', fontWeight: 900, fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
+            <span style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>
               {calculation.destinationDrawAllowedKg.riceKg + calculation.destinationDrawAllowedKg.wheatKg}
             </span>
-            <span style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-secondary)' }}>kg grain allowed today</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-secondary)' }}>kg grain allowed today</span>
           </div>
 
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>

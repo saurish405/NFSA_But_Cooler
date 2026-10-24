@@ -73,8 +73,8 @@ export const PictorialView: React.FC<PictorialViewProps> = ({ card }) => {
       {/* Header with Language Selector & Voice Button */}
       <div className="card-header">
         <div>
-          <div className="card-title" style={{ fontSize: '1.25rem' }}>
-            <Users size={22} color="#38bdf8" />
+          <div className="card-title" style={{ fontSize: '1.15rem' }}>
+            <Users size={18} />
             <span>चित्रमय इंटरफ़ेस • Pictorial & Audio View</span>
             <span className="badge badge-safe">कम साक्षरता अनुकूल (Low-Literacy Safe)</span>
           </div>
@@ -121,13 +121,13 @@ export const PictorialView: React.FC<PictorialViewProps> = ({ card }) => {
       <div className="pictorial-grid">
         {/* Rice Card */}
         <div className="pictorial-card">
-          <div className="pictorial-icon-ring" style={{ background: 'linear-gradient(135deg, #0284c7, #0369a1)', color: '#fff' }}>
-            <Utensils size={36} />
+          <div className="pictorial-icon-ring">
+            <Utensils size={28} />
           </div>
           <div className="pictorial-label">RICE</div>
           <div className="pictorial-vernacular">चावल • బియ్యం</div>
-          <div className="pictorial-amount" style={{ color: '#38bdf8' }}>
-            {card.monthlyQuota.riceKg} <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>kg</span>
+          <div className="pictorial-amount">
+            {card.monthlyQuota.riceKg} <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>kg</span>
           </div>
           <button
             type="button"
@@ -141,13 +141,13 @@ export const PictorialView: React.FC<PictorialViewProps> = ({ card }) => {
 
         {/* Wheat Card */}
         <div className="pictorial-card">
-          <div className="pictorial-icon-ring" style={{ background: 'linear-gradient(135deg, #d97706, #b45309)', color: '#fff' }}>
-            <Wheat size={36} />
+          <div className="pictorial-icon-ring">
+            <Wheat size={28} />
           </div>
           <div className="pictorial-label">WHEAT</div>
-          <div className="pictorial-vernacular">गेहूं • గోధుమలు</div>
-          <div className="pictorial-amount" style={{ color: '#fbbf24' }}>
-            {card.monthlyQuota.wheatKg} <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>kg</span>
+          <div className="pictorial-vernacular">गेहूं • गोధుమలు</div>
+          <div className="pictorial-amount">
+            {card.monthlyQuota.wheatKg} <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>kg</span>
           </div>
           <button
             type="button"
@@ -161,13 +161,13 @@ export const PictorialView: React.FC<PictorialViewProps> = ({ card }) => {
 
         {/* Kerosene Card */}
         <div className="pictorial-card">
-          <div className="pictorial-icon-ring" style={{ background: 'linear-gradient(135deg, #4f46e5, #4338ca)', color: '#fff' }}>
-            <Fuel size={36} />
+          <div className="pictorial-icon-ring">
+            <Fuel size={28} />
           </div>
           <div className="pictorial-label">KEROSENE</div>
           <div className="pictorial-vernacular">केरोसिन तेल • కిరోసిన్</div>
-          <div className="pictorial-amount" style={{ color: '#818cf8' }}>
-            {card.monthlyQuota.keroseneLitres} <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>L</span>
+          <div className="pictorial-amount">
+            {card.monthlyQuota.keroseneLitres} <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>L</span>
           </div>
           <button
             type="button"
@@ -181,13 +181,13 @@ export const PictorialView: React.FC<PictorialViewProps> = ({ card }) => {
 
         {/* Sugar Card */}
         <div className="pictorial-card">
-          <div className="pictorial-icon-ring" style={{ background: 'linear-gradient(135deg, #059669, #047857)', color: '#fff' }}>
-            <Candy size={36} />
+          <div className="pictorial-icon-ring">
+            <Candy size={28} />
           </div>
           <div className="pictorial-label">SUGAR</div>
           <div className="pictorial-vernacular">चीनी • చక్కెర</div>
-          <div className="pictorial-amount" style={{ color: '#34d399' }}>
-            {card.monthlyQuota.sugarKg} <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>kg</span>
+          <div className="pictorial-amount">
+            {card.monthlyQuota.sugarKg} <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>kg</span>
           </div>
           <button
             type="button"

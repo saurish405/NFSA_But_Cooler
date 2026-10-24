@@ -100,7 +100,7 @@ export const App: React.FC = () => {
     if (isSpeaking) {
       speechEngine.stop();
     } else {
-      const summary = `AntiGravity Zero-Runaround PDS Navigator. Viewing ration card ${activeCard.cardNumber} from ${activeCard.homeState}. Total monthly grain quota is ${activeCard.monthlyQuota.riceKg + activeCard.monthlyQuota.wheatKg} kilograms. All demographic mutations are simulation-guarded.`;
+      const summary = `NFSA_But_Cooler Zero-Runaround PDS Navigator. Viewing ration card ${activeCard.cardNumber} from ${activeCard.homeState}. Total monthly grain quota is ${activeCard.monthlyQuota.riceKg + activeCard.monthlyQuota.wheatKg} kilograms. All demographic mutations are simulation-guarded.`;
       speechEngine.speak(summary, 'en');
     }
   };

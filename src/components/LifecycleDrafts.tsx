@@ -70,7 +70,7 @@ export const LifecycleDrafts: React.FC<LifecycleDraftsProps> = ({ drafts, onDraf
       <div className="card-header">
         <div>
           <div className="card-title">
-            <Building2 size={20} color="#38bdf8" />
+            <Building2 size={18} />
             <span>Multi-State Draft vs Official Submission Lifecycle</span>
             <span className={`badge ${isUnsynced ? 'badge-caution' : 'badge-safe'}`}>
               {activeDraft.status}
@@ -85,14 +85,14 @@ export const LifecycleDrafts: React.FC<LifecycleDraftsProps> = ({ drafts, onDraf
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <div
             style={{
-              background: 'rgba(56, 189, 248, 0.1)',
-              border: '1px solid rgba(56, 189, 248, 0.3)',
-              borderRadius: '8px',
-              padding: '0.4rem 0.75rem',
+              background: 'var(--bg-elevated)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-sm)',
+              padding: '0.35rem 0.65rem',
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.95rem',
-              fontWeight: 800,
-              color: '#38bdf8',
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: 'var(--text-primary)',
               display: 'flex',
               alignItems: 'center',
               gap: '0.4rem',

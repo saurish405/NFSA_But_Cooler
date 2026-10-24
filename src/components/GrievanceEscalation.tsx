@@ -282,8 +282,8 @@ export const GrievanceEscalation: React.FC = () => {
           paddingTop: '1.25rem',
         }}
       >
-        <div style={{ fontWeight: 800, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-          <Sparkles size={16} color="#38bdf8" />
+        <div style={{ fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+          <Sparkles size={15} />
           <span>Interactive Adversarial Input Playground (EC-14)</span>
         </div>
         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>

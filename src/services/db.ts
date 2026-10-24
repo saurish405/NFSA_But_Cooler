@@ -18,7 +18,7 @@ export interface EphemeralSessionItem {
   expiresAt: number;
 }
 
-export class AntiGravityDB extends Dexie {
+export class NfsaButCoolerDB extends Dexie {
   drafts!: Table<DraftLifecycleRecord, string>;
   rationCards!: Table<RationCard, string>;
   grievances!: Table<GrievanceRecord, string>;
@@ -26,7 +26,7 @@ export class AntiGravityDB extends Dexie {
   ephemeralSession!: Table<EphemeralSessionItem, string>;
 
   constructor() {
-    super('AntiGravity_NFSA_DB');
+    super('NFSA_But_Cooler_DB');
     this.version(1).stores({
       drafts: 'id, shortCodeReceipt, status, createdAt',
       rationCards: 'cardNumber, homeState, fpsAssignedId',
@@ -37,7 +37,7 @@ export class AntiGravityDB extends Dexie {
   }
 }
 
-export const db = new AntiGravityDB();
+export const db = new NfsaButCoolerDB();
 
 // Native Web Crypto SHA-256 helper
 export async function computeSha256(data: string): Promise<string> {

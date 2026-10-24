@@ -15,7 +15,6 @@ import {
   ServerCrash,
   Database,
   FileCode,
-  Flame,
 } from 'lucide-react';
 
 interface JudgeDebugHUDProps {
@@ -27,7 +26,6 @@ interface JudgeDebugHUDProps {
 export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
   faultConfig,
   onUpdateFaultConfig,
-  onSelfHealTriggered,
 }) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const [isRunningTests, setIsRunningTests] = useState<boolean>(false);
@@ -40,7 +38,7 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
     setActiveTab('test_runner');
     setTestResults([]);
 
-    const run = await runAllAutomatedTests((currentIdx, total, result) => {
+    const run = await runAllAutomatedTests((_currentIdx, _total, result) => {
       setTestResults((prev) => [...prev, result]);
     });
 
@@ -57,19 +55,15 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
       {/* HUD Header Bar */}
       <div className="judge-hud-header" onClick={() => setCollapsed(!collapsed)}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <Sliders size={18} color="#38bdf8" />
-          <span style={{ fontWeight: 800, fontSize: '0.875rem', letterSpacing: '-0.01em', color: '#f8fafc' }}>
-            [!] ANTIGRAVITY FAULT INJECTION CONTROLLER (JUDGES)
+          <Sliders size={16} />
+          <span style={{ fontWeight: 700, fontSize: '0.85rem', letterSpacing: '-0.01em', color: 'var(--text-primary)' }}>
+            [!] NFSA_BUT_COOLER FAULT CONTROLLER (JUDGES)
           </span>
           <span
-            className="badge"
-            style={{
-              background: faultConfig.forceOffline ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.2)',
-              color: faultConfig.forceOffline ? '#f87171' : '#34d399',
-              fontSize: '0.675rem',
-            }}
+            className={`badge ${faultConfig.forceOffline ? 'badge-danger' : 'badge-safe'}`}
+            style={{ fontSize: '0.65rem' }}
           >
-            {faultConfig.forceOffline ? 'OFFLINE SIM' : 'ONLINE'}
+            {faultConfig.forceOffline ? 'OFFLINE' : 'ONLINE'}
           </span>
         </div>
 
@@ -78,7 +72,7 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
           style={{ color: 'var(--text-secondary)' }}
           aria-label={collapsed ? 'Expand Controller' : 'Collapse Controller'}
         >
-          {collapsed ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          {collapsed ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </button>
       </div>
 
@@ -92,9 +86,8 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
               className={`btn btn-secondary ${activeTab === 'faults' ? 'active' : ''}`}
               style={{
                 flex: 1,
-                fontSize: '0.775rem',
+                fontSize: '0.75rem',
                 padding: '0.4rem',
-                border: activeTab === 'faults' ? '1px solid var(--text-accent)' : undefined,
               }}
               onClick={() => setActiveTab('faults')}
             >
@@ -106,9 +99,8 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
               className={`btn btn-secondary ${activeTab === 'test_runner' ? 'active' : ''}`}
               style={{
                 flex: 1,
-                fontSize: '0.775rem',
+                fontSize: '0.75rem',
                 padding: '0.4rem',
-                border: activeTab === 'test_runner' ? '1px solid var(--text-accent)' : undefined,
               }}
               onClick={() => setActiveTab('test_runner')}
             >
@@ -118,11 +110,11 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
           </div>
 
           {activeTab === 'faults' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               {/* Force Complete Offline Mode */}
               <div className="fault-toggle-row">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem' }}>
-                  {faultConfig.forceOffline ? <WifiOff size={16} color="#ef4444" /> : <Wifi size={16} color="#10b981" />}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                  {faultConfig.forceOffline ? <WifiOff size={15} color="var(--civic-crimson-text)" /> : <Wifi size={15} color="var(--civic-emerald-text)" />}
                   <span>Force Complete Offline Mode</span>
                 </div>
                 <label className="switch">
@@ -138,8 +130,8 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
 
               {/* Inject Gateway 504 Timeout */}
               <div className="fault-toggle-row">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem' }}>
-                  <ServerCrash size={16} color={faultConfig.gatewayTimeout504 ? '#ef4444' : 'var(--text-muted)'} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                  <ServerCrash size={15} color={faultConfig.gatewayTimeout504 ? 'var(--civic-crimson-text)' : 'var(--text-muted)'} />
                   <span>Inject Gateway 504 Gateway Timeout</span>
                 </div>
                 <label className="switch">
@@ -155,8 +147,8 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
 
               {/* Corrupt IndexedDB Storage State */}
               <div className="fault-toggle-row">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem' }}>
-                  <Database size={16} color={faultConfig.corruptStorage ? '#ef4444' : 'var(--text-muted)'} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                  <Database size={15} color={faultConfig.corruptStorage ? 'var(--civic-crimson-text)' : 'var(--text-muted)'} />
                   <span>Corrupt IndexedDB Storage State (EC-13)</span>
                 </div>
                 <label className="switch">
@@ -172,8 +164,8 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
 
               {/* Simulate Backend Data Conflict (409 Version Mismatch) */}
               <div className="fault-toggle-row">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem' }}>
-                  <FileCode size={16} color={faultConfig.backendConflict409 ? '#ef4444' : 'var(--text-muted)'} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                  <FileCode size={15} color={faultConfig.backendConflict409 ? 'var(--civic-crimson-text)' : 'var(--text-muted)'} />
                   <span>Simulate Backend Data Conflict (409)</span>
                 </div>
                 <label className="switch">
@@ -189,8 +181,8 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
 
               {/* Inject Adversarial Prompt Payload into Forms */}
               <div className="fault-toggle-row">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem' }}>
-                  <Shield size={16} color={faultConfig.promptInjectionActive ? '#ef4444' : 'var(--text-muted)'} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                  <Shield size={15} color={faultConfig.promptInjectionActive ? 'var(--civic-crimson-text)' : 'var(--text-muted)'} />
                   <span>Inject Adversarial Prompt Payload (EC-14)</span>
                 </div>
                 <label className="switch">
@@ -206,8 +198,8 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
 
               {/* Throttle Network to 2G Speeds */}
               <div className="fault-toggle-row">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem' }}>
-                  <WifiOff size={16} color={faultConfig.throttle2G ? '#f59e0b' : 'var(--text-muted)'} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                  <WifiOff size={15} color={faultConfig.throttle2G ? 'var(--civic-amber-text)' : 'var(--text-muted)'} />
                   <span>Throttle Network to 2G (30 kbps) (EC-15)</span>
                 </div>
                 <label className="switch">
@@ -225,11 +217,11 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
                 <button
                   type="button"
                   className="btn btn-primary"
-                  style={{ width: '100%', fontSize: '0.85rem' }}
+                  style={{ width: '100%', fontSize: '0.825rem' }}
                   onClick={handleRunAllTests}
                   id="btn-run-tests-from-faults"
                 >
-                  <Play size={14} />
+                  <Play size={13} />
                   <span>RUN AUTOMATED TEST SUITE (15 / 15 Cases) [▶ RUN ALL]</span>
                 </button>
               </div>
@@ -239,13 +231,13 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
           {activeTab === 'test_runner' && (
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 800 }}>
+                <span style={{ fontSize: '0.825rem', fontWeight: 700 }}>
                   Test Cases Evaluated: {testResults.length} / 15
                 </span>
                 <button
                   type="button"
                   className="btn btn-primary"
-                  style={{ fontSize: '0.775rem', padding: '0.35rem 0.75rem' }}
+                  style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem' }}
                   onClick={handleRunAllTests}
                   disabled={isRunningTests}
                   id="btn-trigger-all-tests"
@@ -259,41 +251,41 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
               {testMetrics && (
                 <div
                   style={{
-                    background: 'rgba(16, 185, 129, 0.1)',
-                    border: '1px solid rgba(16, 185, 129, 0.3)',
-                    borderRadius: '10px',
-                    padding: '0.85rem',
-                    marginBottom: '0.85rem',
+                    background: 'var(--status-safe-bg)',
+                    border: '1px solid var(--status-safe-border)',
+                    borderRadius: 'var(--radius-sm)',
+                    padding: '0.75rem',
+                    marginBottom: '0.75rem',
                   }}
                   id="metrics-scoreboard"
                 >
-                  <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--emerald-400)', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '0.725rem', fontWeight: 700, color: 'var(--status-safe-text)', textTransform: 'uppercase' }}>
                     Section 8: Quantitative Success Metrics Verified
                   </div>
                   <div
                     style={{
                       display: 'grid',
                       gridTemplateColumns: 'repeat(2, 1fr)',
-                      gap: '0.5rem',
-                      marginTop: '0.5rem',
-                      fontSize: '0.75rem',
+                      gap: '0.45rem',
+                      marginTop: '0.45rem',
+                      fontSize: '0.725rem',
                     }}
                   >
                     <div>
-                      <div style={{ color: 'var(--text-muted)' }}>Harmful Correction Catch:</div>
-                      <div style={{ fontWeight: 800, color: '#34d399' }}>{testMetrics.harmfulCorrectionCatchRate}</div>
+                      <div style={{ color: 'var(--text-secondary)' }}>Harmful Correction Catch:</div>
+                      <div style={{ fontWeight: 700, color: 'var(--status-safe-text)' }}>{testMetrics.harmfulCorrectionCatchRate}</div>
                     </div>
                     <div>
-                      <div style={{ color: 'var(--text-muted)' }}>Shared Device Leakage:</div>
-                      <div style={{ fontWeight: 800, color: '#34d399' }}>{testMetrics.sharedDeviceDataLeakage}</div>
+                      <div style={{ color: 'var(--text-secondary)' }}>Shared Device Leakage:</div>
+                      <div style={{ fontWeight: 700, color: 'var(--status-safe-text)' }}>{testMetrics.sharedDeviceDataLeakage}</div>
                     </div>
                     <div>
-                      <div style={{ color: 'var(--text-muted)' }}>Screen-Reader/Keyboard:</div>
-                      <div style={{ fontWeight: 800, color: '#34d399' }}>{testMetrics.screenReaderKeyboardFlow}</div>
+                      <div style={{ color: 'var(--text-secondary)' }}>Screen-Reader/Keyboard:</div>
+                      <div style={{ fontWeight: 700, color: 'var(--status-safe-text)' }}>{testMetrics.screenReaderKeyboardFlow}</div>
                     </div>
                     <div>
-                      <div style={{ color: 'var(--text-muted)' }}>Offline Sync Recovery:</div>
-                      <div style={{ fontWeight: 800, color: '#34d399' }}>{testMetrics.offlineSyncRecoveryLatency}</div>
+                      <div style={{ color: 'var(--text-secondary)' }}>Offline Sync Recovery:</div>
+                      <div style={{ fontWeight: 700, color: 'var(--status-safe-text)' }}>{testMetrics.offlineSyncRecoveryLatency}</div>
                     </div>
                   </div>
                 </div>
@@ -304,23 +296,23 @@ export const JudgeDebugHUD: React.FC<JudgeDebugHUDProps> = ({
                 {testResults.map((t) => (
                   <div key={t.id} className={`test-item ${t.passed ? 'passed' : 'failed'}`}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <span style={{ fontWeight: 800, color: 'var(--text-primary)' }}>
+                      <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>
                         [{t.id}] {t.title}
                       </span>
                       {t.passed ? (
                         <span className="badge badge-safe">
-                          <CheckCircle2 size={12} /> PASSED
+                          <CheckCircle2 size={11} /> PASSED
                         </span>
                       ) : (
                         <span className="badge badge-danger">
-                          <XCircle size={12} /> FAILED
+                          <XCircle size={11} /> FAILED
                         </span>
                       )}
                     </div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '0.725rem' }}>
                       {t.description}
                     </div>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-accent)' }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-primary)' }}>
                       Observed: {t.metricObserved}
                     </div>
                   </div>
