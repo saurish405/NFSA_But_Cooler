@@ -116,7 +116,6 @@ Modeled on the official Government of India portal (`https://nfsa.gov.in/`):
   $$\text{80.72 Cr Beneficiaries} \quad\mid\quad \text{19.85 Cr Active Cards} \quad\mid\quad \text{5,38,241 FPS (99.4\% ePoS)} \quad\mid\quad \text{55.4L MT Monthly Grain}$$
 - **Key Capability Tiles:** Instant entry points into the Pre-Flight Simulator, ONORC Portability, FPS Radar, and Foodgrains Bulletin.
 - **Step-by-Step Process Journey:** Clear horizontal pills (`1. Roster Lookup` $\to$ `2. Check Entitlements` $\to$ `3. Safe Simulation` $\to$ `4. Collect at FPS` $\to$ `5. HMAC Receipt`) with preview cards.
-- **Verified Impact Testimonials:** 5-star verified reviews from beneficiaries and inspectors in Bihar, Andhra Pradesh, and Uttar Pradesh.
 - **Curved Emerald Call-to-Action Banner:** Direct links to NICCI Assistant and Toll-Free Helpline **`1967`**.
 - **Institutional Footer:** Department links, helplines, and legal notices.
 

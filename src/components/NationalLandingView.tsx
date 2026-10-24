@@ -15,7 +15,6 @@ import {
   AlertCircle,
   ExternalLink,
   ShieldCheck,
-  Star,
   PhoneCall,
   Search,
   Lock,
@@ -600,96 +599,7 @@ export const NationalLandingView: React.FC<NationalLandingViewProps> = ({
         </div>
       </section>
 
-      {/* 4. Verified Citizen & Officer Impact (গ্রাহক মতামত ও রিভিউ / Testimonials) */}
-      <section aria-label="Verified Impact">
-        <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 2rem auto' }}>
-          <div style={{ fontSize: '0.775rem', fontWeight: 700, color: '#16a34a', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.4rem' }}>
-            Verified Impact & Citizen Feedback • जन प्रभाव
-          </div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: 0 }}>
-            Trusted by Migrants, Rural CSCs, and Food Inspectors
-          </h2>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
-          {/* Review 1 */}
-          <div className="card" style={{ padding: '1.25rem', background: 'var(--bg-card)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ display: 'flex', gap: '0.2rem', color: '#eab308', marginBottom: '0.65rem' }}>
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-              </div>
-              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.5, fontStyle: 'italic', margin: '0 0 1rem 0' }}>
-                "When updating my son Ramesh's age from 17 to 18, the simulator alerted us that Bihar Rule 4B would reduce our allocation by 5kg without Form 3B affidavit. That saved our monthly ration!"
-              </p>
-            </div>
-            <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.75rem' }}>
-                RP
-              </div>
-              <div>
-                <div style={{ fontSize: '0.825rem', fontWeight: 700 }}>Ramvilas Paswan</div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Maner, Patna (Bihar) • Household Head</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Review 2 */}
-          <div className="card" style={{ padding: '1.25rem', background: 'var(--bg-card)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ display: 'flex', gap: '0.2rem', color: '#eab308', marginBottom: '0.65rem' }}>
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-              </div>
-              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.5, fontStyle: 'italic', margin: '0 0 1rem 0' }}>
-                "I migrated to Andhra Pradesh for seasonal farm work. Using the ONORC engine, I drew my 10kg rice quota in Guntur, while my wife and children drew their 15kg in Bihar without any blockages."
-              </p>
-            </div>
-            <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.75rem' }}>
-                DK
-              </div>
-              <div>
-                <div style={{ fontSize: '0.825rem', fontWeight: 700 }}>Devi Kumari & Family</div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Interstate Migrant Family • Andhra Pradesh / Bihar</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Review 3 */}
-          <div className="card" style={{ padding: '1.25rem', background: 'var(--bg-card)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ display: 'flex', gap: '0.2rem', color: '#eab308', marginBottom: '0.65rem' }}>
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-                <Star size={14} fill="#eab308" />
-              </div>
-              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.5, fontStyle: 'italic', margin: '0 0 1rem 0' }}>
-                "The objective anomaly signals distinguish genuine internet batch syncs from suspicious off-hours diversions. It eliminated administrative harassment and brought data-backed integrity."
-              </p>
-            </div>
-            <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.75rem' }}>
-                SO
-              </div>
-              <div>
-                <div style={{ fontSize: '0.825rem', fontWeight: 700 }}>Taluk Supply Officer</div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Dept of Food & Civil Supplies • Regional Inspectorate</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Curved Emerald FAQ & Help CTA Banner (পদ্ধতি সম্পর্কিত জিজ্ঞাসা / Have Questions?) */}
+      {/* 4. Curved Emerald FAQ & Help CTA Banner (পদ্ধতি সম্পর্কিত জিজ্ঞাসা / Have Questions?) */}
       <section
         style={{
           background: 'linear-gradient(135deg, #0e3820 0%, #15803d 100%)',
